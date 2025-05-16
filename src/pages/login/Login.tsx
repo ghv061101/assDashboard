@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // adjust path as needed
+import { useAuth } from "../../context/AuthContext";
 import "./login.scss";
 
 const Login: React.FC = () => {
@@ -10,21 +10,30 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     if (!email || !password) {
       setError("Please enter both email and password.");
+      setIsLoading(false);
       return;
     }
 
-    const success = login(email, password);
-    if (success) {
-      navigate("/");  // Redirect to home or dashboard
-    } else {
-      setError("Invalid email or password.");
+    try {
+      const success = await login(email, password);
+      if (success) {
+        navigate("/");
+      } else {
+        setError("Invalid email or password.");
+      }
+    } catch (err) {
+      setError("An error occurred during login.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,6 +52,7 @@ const Login: React.FC = () => {
           onChange={e => setEmail(e.target.value)}
           placeholder="you@example.com"
           required
+          disabled={isLoading}
         />
 
         <label htmlFor="password">Password</label>
@@ -53,9 +63,16 @@ const Login: React.FC = () => {
           onChange={e => setPassword(e.target.value)}
           placeholder="Enter your password"
           required
+          disabled={isLoading}
         />
 
-        <button type="submit" className="login-btn">Login</button>
+        <button 
+          type="submit" 
+          className="login-btn"
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
       </form>
     </div>
   );
