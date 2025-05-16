@@ -1,4 +1,5 @@
-import React, { ReactElement } from "react";
+import React from "react";
+import type { ReactElement } from "react";
 import Home from "./pages/home/Home";
 import {
   createBrowserRouter,
@@ -20,12 +21,12 @@ import Navbar from "./components/navbar/Navbar";
 import Menu from "./components/menu/Menu";
 import Footer from "./components/footer/Footer";
 
-import { AuthProvider, useAuth } from "../src/context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/login/Login";
 import Profile from "./components/profile/Profile";
 
-import './app.scss'
-import './styles/global.scss'
+import './app.scss';
+import './styles/global.scss';
 
 function App() {
   const Layout = () => (
@@ -141,7 +142,7 @@ function App() {
       ],
     },
     { path: "/login", element: <Login /> },
-    { path: "*", element: <Navigate to="/" replace /> },
+    { path: "*", element: <Navigate to="/" replace /> }
   ]);
 
   return (
