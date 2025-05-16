@@ -1,6 +1,5 @@
 import React from "react";
 import type { ReactElement } from "react";
-import Home from "./pages/home/Home";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-
+import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";
 import Products from "./pages/products/Products";
 import Ships from "./pages/ships/Ships";
@@ -26,126 +25,132 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/login/Login";
 import Profile from "./components/profile/Profile";
 
-import './app.scss';
-import './styles/global.scss';
+import "./app.scss";
+import "./styles/global.scss";
 
-function App() {
-  const Layout = () => (
-    <div className="main">
-      <Navbar />
-      <div className="container">
-        <div className="menuContainer">
-          <Menu />
-        </div>
-        <div className="contentContainer">
-          <Outlet />
-        </div>
+// Layout component for main structure
+const Layout = (): ReactElement => (
+  <div className="main">
+    <Navbar />
+    <div className="container">
+      <div className="menuContainer">
+        <Menu />
       </div>
-      <Footer />
+      <div className="contentContainer">
+        <Outlet />
+      </div>
     </div>
-  );
+    <Footer />
+  </div>
+);
 
-  const PrivateRoute: React.FC<{ 
-    children: ReactElement; 
-    allowedRoles?: string[] 
-  }> = ({ children, allowedRoles }) => {
-    const { user } = useAuth();
+// PrivateRoute wrapper to handle auth & role-based access
+type PrivateRouteProps = {
+  children: ReactElement;
+  allowedRoles?: string[];
+};
 
-    if (!user) {
-      return <Navigate to="/login" replace />;
-    }
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, allowedRoles }) => {
+  const { user } = useAuth();
 
-    if (allowedRoles && !allowedRoles.includes(user.role)) {
-      return <Navigate to="/" replace />;
-    }
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-    return children;
-  };
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/" replace />;
+  }
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { path: "/", element: <Home /> },
-        {
-          path: "/users",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <Users />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/users/:id",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <ViewUser />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/products",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <Products />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/products/:id",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <ViewProducts />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/ships",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <Ships />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/ships/:id",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
-              <ViewShip />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/jobs",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
-              <Job />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/jobs/:id",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
-              <ViewJob />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "/profile",
-          element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
-              <Profile />
-            </PrivateRoute>
-          ),
-        },
-      ],
-    },
-    { path: "/login", element: <Login /> },
-    { path: "*", element: <Navigate to="/" replace /> }
-  ]);
+  return children;
+};
 
+// Router definition
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "/", element: <Home /> },
+      {
+        path: "/users",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <Users />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/users/:id",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <ViewUser />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <Products />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/products/:id",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <ViewProducts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/ships",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <Ships />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/ships/:id",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <ViewShip />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/jobs",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
+            <Job />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/jobs/:id",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
+            <ViewJob />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  { path: "/login", element: <Login /> },
+  { path: "*", element: <Navigate to="/" replace /> },
+]);
+
+// Main App component
+function App(): ReactElement {
   return (
     <AuthProvider>
       <RouterProvider router={router} />
