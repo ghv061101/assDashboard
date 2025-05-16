@@ -6,7 +6,7 @@ import {
 
 const Home = () => {
   // Process Ships by Status
-  const shipsByStatus = db.ships.reduce((acc, ship) => {
+  const shipsByStatus = db.ships.reduce((acc: { [key: string]: number }, ship) => {
     acc[ship.status] = (acc[ship.status] || 0) + 1;
     return acc;
   }, {});
@@ -28,7 +28,7 @@ const Home = () => {
   }));
 
   // Process Jobs by Priority
-  const jobsByPriority = db.jobs.reduce((acc, job) => {
+  const jobsByPriority = db.jobs.reduce((acc: { [key: string]: number }, job) => {
     acc[job.priority] = (acc[job.priority] || 0) + 1;
     return acc;
   }, {});
@@ -39,7 +39,7 @@ const Home = () => {
   }));
 
   // Process Users by Role
-  const usersByRole = db.users.reduce((acc, user) => {
+  const usersByRole = db.users.reduce((acc: { [key: string]: number }, user) => {
     acc[user.role] = (acc[user.role] || 0) + 1;
     return acc;
   }, {});
@@ -71,7 +71,7 @@ const Home = () => {
                 outerRadius={100}
                 label
               >
-                {shipStatusData.map((entry, index) => (
+                {shipStatusData.map((_entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -123,7 +123,7 @@ const Home = () => {
                 outerRadius={100}
                 label
               >
-                {userRoleData.map((entry, index) => (
+                {userRoleData.map((_entry, index) => (
                   <Cell key={`cell-user-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
