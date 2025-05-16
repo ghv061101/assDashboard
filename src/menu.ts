@@ -92,17 +92,5 @@ export const menu = [
       },
       
     ],
-  },
-  {
-    id:6,
-    title:"logout",
-    listItems:[
-      {
-        id:1,
-        title:"Logout",
-        url:"/login",
-        icon:"logout.png",
-      }
-    ]
   }
 ];
