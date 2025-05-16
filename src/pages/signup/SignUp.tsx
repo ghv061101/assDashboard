@@ -3,6 +3,16 @@ import { useNavigate, Link } from "react-router-dom";
 import { db } from "../../db";
 import "./signup.scss";
 
+// User type defined here, not in db.ts
+type User = {
+  id: string;
+  email: string;
+  password: string;
+  role: string;
+};
+
+const USERS_KEY = "users";
+
 const Signup: React.FC = () => {
   const navigate = useNavigate();
 
@@ -12,7 +22,16 @@ const Signup: React.FC = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const getStoredUsers = (): User[] => {
+    const users = localStorage.getItem(USERS_KEY);
+    return users ? JSON.parse(users) : [];
+  };
+
+  const saveUsers = (users: User[]) => {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -26,7 +45,8 @@ const Signup: React.FC = () => {
       return;
     }
 
-    const existingUser = db.users.find(u => u.email === email);
+    const existingUsers = getStoredUsers();
+    const existingUser = existingUsers.find((u) => u.email === email);
     if (existingUser) {
       setError("An account with this email already exists.");
       return;
@@ -35,13 +55,17 @@ const Signup: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const newUser = {
+      const newUser: User = {
         id: Date.now().toString(),
         email,
-        password, // Note: never store plaintext passwords in real apps!
+        password,
         role: "user",
       };
 
+      const updatedUsers = [...existingUsers, newUser];
+      saveUsers(updatedUsers);
+
+      // Optional in-memory store (if your app reads from it elsewhere)
       db.users.push(newUser);
 
       alert("Account created successfully! You can now log in.");
@@ -65,7 +89,7 @@ const Signup: React.FC = () => {
           id="email"
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
           required
           disabled={isLoading}
@@ -76,7 +100,7 @@ const Signup: React.FC = () => {
           id="password"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter password"
           required
           disabled={isLoading}
@@ -87,7 +111,7 @@ const Signup: React.FC = () => {
           id="confirmPassword"
           type="password"
           value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm password"
           required
           disabled={isLoading}
