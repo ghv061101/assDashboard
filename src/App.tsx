@@ -131,7 +131,7 @@ function App() {
         {
           path: "/profile",
           element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer"]}>
+            <PrivateRoute allowedRoles={["admin", "inspector", "engineer","user"]}>
               <Profile />
             </PrivateRoute>
           ),
