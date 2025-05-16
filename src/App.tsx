@@ -1,5 +1,6 @@
-import React from "react";
-import type { ReactElement } from "react";
+import  type{ ReactElement } from "react";
+// import type { ReactElement } from "react";
+// import   ReactElement  from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -30,7 +31,7 @@ import "./styles/global.scss";
 import Signup from "./pages/signup/SignUp";
 
 // Layout component for main structure
-const Layout = (): ReactElement => (
+const Layout = () => (
   <div className="main">
     <Navbar />
     <div className="container">
@@ -152,7 +153,7 @@ const router = createBrowserRouter([
 ]);
 
 // Main App component
-function App(): ReactElement {
+function App() {
   return (
     <AuthProvider>
       <RouterProvider router={router} />
