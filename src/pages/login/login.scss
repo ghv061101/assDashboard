@@ -1,67 +1,72 @@
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  background: #f0f4f8;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .login-form {
-  background: white;
-  padding: 30px 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  width: 320px;
   display: flex;
   flex-direction: column;
 
   h2 {
-    margin-bottom: 20px;
-    color: #0077cc;
+    margin-bottom: 1.5rem;
     text-align: center;
   }
 
   label {
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
   }
 
   input {
-    padding: 10px 12px;
-    margin-bottom: 16px;
-    border-radius: 5px;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
     border: 1px solid #ccc;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-
-    &:focus {
-      outline: none;
-      border-color: #0077cc;
-      box-shadow: 0 0 5px #0077cc;
+    border-radius: 5px;
+    &:disabled {
+      background: #f9f9f9;
     }
   }
 
   .login-btn {
-    padding: 12px;
-    background: #0077cc;
-    border: none;
-    border-radius: 6px;
+    padding: 0.7rem;
+    background-color: #007bff;
     color: white;
-    font-weight: 700;
+    border: none;
     font-size: 1rem;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background: #005fa3;
+    &:disabled {
+      background-color: #a5d0ff;
+      cursor: not-allowed;
     }
   }
 
   .error-message {
-    color: #f44336;
-    margin-bottom: 15px;
-    font-weight: 600;
+    background: #ffe0e0;
+    color: #c00;
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
     text-align: center;
+  }
+
+  .signup-redirect {
+    margin-top: 1rem;
+    text-align: center;
+    p {
+      font-size: 0.9rem;
+      a {
+        color: #007bff;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }

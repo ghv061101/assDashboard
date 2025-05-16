@@ -11,6 +11,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
+  signup: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -24,7 +25,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored auth on mount
     const storedUser = localStorage.getItem(AUTH_KEY);
     if (storedUser) {
       try {
@@ -38,15 +38,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    const foundUser = db.users.find(u => {
-      return u.email === email && u.password === password;
-    });
+    const foundUser = db.users.find(u => u.email === email && u.password === password);
 
     if (foundUser) {
-      // Never store password in state or localStorage
       const secureUser = {
         id: foundUser.id,
         email: foundUser.email,
@@ -59,13 +55,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return false;
   };
 
+  const signup = async (email: string, password: string) => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const existingUser = db.users.find(u => u.email === email);
+    if (existingUser) {
+      return false; // User already exists
+    }
+
+    const newUser = {
+      id: String(Date.now()),
+      email,
+      password, // In real apps, never store plaintext passwords!
+      role: "user"
+    };
+    db.users.push(newUser);
+
+    const secureUser = {
+      id: newUser.id,
+      email: newUser.email,
+      role: newUser.role
+    };
+    setUser(secureUser);
+    localStorage.setItem(AUTH_KEY, JSON.stringify(secureUser));
+    return true;
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem(AUTH_KEY);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
@@ -79,7 +101,6 @@ export const useAuth = () => {
   return context;
 };
 
-// Custom hook for protecting routes
 export const useRequireAuth = (allowedRoles?: string[]) => {
   const { user, isLoading } = useAuth();
 

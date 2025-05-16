@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./login.scss";
 
@@ -66,13 +66,17 @@ const Login: React.FC = () => {
           disabled={isLoading}
         />
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="login-btn"
           disabled={isLoading}
         >
           {isLoading ? "Logging in..." : "Login"}
         </button>
+
+        <div className="signup-redirect">
+          <p>Don't have an account? <Link to="/signup">Create one</Link></p>
+        </div>
       </form>
     </div>
   );

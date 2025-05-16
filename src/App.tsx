@@ -1,5 +1,5 @@
 import React from "react";
-import type { FC, ReactElement } from "react";
+import type { ReactElement } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -27,6 +27,7 @@ import Profile from "./components/profile/Profile";
 
 import "./app.scss";
 import "./styles/global.scss";
+import Signup from "./pages/signup/SignUp";
 
 // Layout component for main structure
 const Layout = (): ReactElement => (
@@ -146,6 +147,7 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup/> }, // 👈 added signup route here
   { path: "*", element: <Navigate to="/" replace /> },
 ]);
 
