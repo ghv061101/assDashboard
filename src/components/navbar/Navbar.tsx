@@ -22,11 +22,11 @@ const Navbar = () => {
         </div>
 
         <div className="user">
-          <img
+          {/* <img
             src="https://images.pexels.com/photos/2297927/pexels-photo-2297927.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             alt="User Avatar"
             className="icon"
-          />
+          /> */}
           <span>{user ? user.email : "Guest"}</span>
         </div>
 
