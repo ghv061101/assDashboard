@@ -49,3 +49,44 @@
     }
   }
 }
+
+/* Responsive styles for below 480px */
+@media (max-width: 480px) {
+  .menu {
+    width: 60px; /* Narrow width to show only icons */
+    padding: 10px 0;
+    height: 130vh;
+    overflow-y: auto;
+  }
+
+  .menu .item {
+    gap: 0;
+  }
+
+  .menu .item .title {
+    display: none; /* Hide section titles */
+  }
+
+  .menu .item a {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 12px 0;
+    border-radius: 0;
+  }
+
+  .menu .item a .listItemTitle {
+    display: none; /* Hide text labels */
+  }
+
+  .menu .item a img {
+    width: 28px; /* Slightly bigger icons for visibility */
+    height: 28px;
+  }
+
+  .menu .item a:hover {
+    transform: none; /* Remove horizontal movement on hover */
+    background-color: #292942;
+  }
+}

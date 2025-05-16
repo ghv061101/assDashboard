@@ -1,6 +1,5 @@
-import  type{ ReactElement } from "react";
-// import type { ReactElement } from "react";
-// import   ReactElement  from "react";
+import React from 'react';
+import type { ReactElement } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -25,12 +24,16 @@ import Footer from "./components/footer/Footer";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/login/Login";
 import Profile from "./components/profile/Profile";
-
-import "./styles/global.scss";
 import Signup from "./pages/signup/SignUp";
 
+import "./styles/global.scss";
+
+// Define valid roles as const array
+const VALID_ROLES = ['admin', 'inspector', 'engineer', 'user'] as const;
+type ValidRole = typeof VALID_ROLES[number];
+
 // Layout component for main structure
-const Layout = () => (
+const Layout: React.FC = () => (
   <div className="main">
     <Navbar />
     <div className="container">
@@ -45,33 +48,49 @@ const Layout = () => (
   </div>
 );
 
-// PrivateRoute wrapper to handle auth & role-based access
+// PrivateRoute wrapper for auth + role-based access
 type PrivateRouteProps = {
   children: ReactElement;
-  allowedRoles?: string[];
+  allowedRoles?: ValidRole[];
 };
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, allowedRoles }) => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
+  // Show loading state while checking auth
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Redirect to login if not authenticated
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+  // Check role access
+  if (allowedRoles && allowedRoles.length > 0) {
+    const userRole = user.role.toLowerCase() as ValidRole;
+    const hasAccess = allowedRoles.map(r => r.toLowerCase()).includes(userRole);
+    
+    if (!hasAccess) {
+      console.log(`Access denied: User role ${userRole} not in allowed roles:`, allowedRoles);
+      return <Navigate to="/" replace />;
+    }
   }
 
   return children;
 };
 
-// Router definition
+// Router setup with typed roles
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/", element: <Home /> },
+      { 
+        path: "/", 
+        element: <Home /> 
+      },
       {
         path: "/users",
         element: (
@@ -147,17 +166,16 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/login", element: <Login /> },
-  { path: "/signup", element: <Signup/> }, // 👈 added signup route here
+  { path: "/signup", element: <Signup /> },
   { path: "*", element: <Navigate to="/" replace /> },
 ]);
 
-// Main App component
-function App() {
+const App: React.FC = () => {
   return (
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
   );
-}
+};
 
 export default App;
