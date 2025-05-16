@@ -1,0 +1,52 @@
+export const ROLES = {
+  ADMIN: "admin",
+  INSPECTOR: "inspector",
+  ENGINEER: "engineer",
+  USER: "user"
+} as const;
+
+export const PERMISSIONS = {
+  VIEW_DASHBOARD: "view_dashboard",
+
+  VIEW_PRODUCTS: "view_products",
+  EDIT_PRODUCT: "edit_product",
+  DELETE_PRODUCTS: "delete_products",
+
+  VIEW_SHIPS: "view_ships",
+  EDIT_SHIP: "edit_ship",
+  DELETE_SHIPS: "delete_ships",
+
+  VIEW_JOBS: "view_jobs",
+  EDIT_JOB: "edit_job",
+  DELETE_JOBS: "delete_jobs"
+} as const;
+
+export const ROLES_PERMISSIONS: Record<
+  (typeof ROLES)[keyof typeof ROLES],
+  string[]
+> = {
+  [ROLES.ADMIN]: [
+    PERMISSIONS.VIEW_DASHBOARD,
+    PERMISSIONS.VIEW_PRODUCTS,
+    PERMISSIONS.EDIT_PRODUCT,
+    PERMISSIONS.DELETE_PRODUCTS,
+    PERMISSIONS.VIEW_SHIPS,
+    PERMISSIONS.EDIT_SHIP,
+    PERMISSIONS.DELETE_SHIPS,
+    PERMISSIONS.VIEW_JOBS,
+    PERMISSIONS.EDIT_JOB,
+    PERMISSIONS.DELETE_JOBS
+  ],
+  [ROLES.ENGINEER]: [
+    PERMISSIONS.VIEW_DASHBOARD,
+    PERMISSIONS.VIEW_PRODUCTS,
+    PERMISSIONS.VIEW_SHIPS,
+    PERMISSIONS.VIEW_JOBS
+  ],
+  [ROLES.INSPECTOR]: [
+    PERMISSIONS.VIEW_DASHBOARD,
+    PERMISSIONS.VIEW_SHIPS,
+    PERMISSIONS.VIEW_JOBS
+  ],
+  [ROLES.USER]: [PERMISSIONS.VIEW_DASHBOARD]
+};
