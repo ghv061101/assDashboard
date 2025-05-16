@@ -1,4 +1,3 @@
-import React from "react";
 import './navbar.scss';
 import { useAuth } from "../../context/AuthContext";
 
