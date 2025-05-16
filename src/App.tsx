@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Home from "./pages/home/Home";
 import {
   createBrowserRouter,
@@ -26,7 +26,6 @@ import Profile from "./components/profile/Profile";
 
 import './app.scss'
 import './styles/global.scss'
-import type { JSX } from "react/jsx-runtime";
 
 function App() {
   const Layout = () => (
@@ -44,7 +43,10 @@ function App() {
     </div>
   );
 
-  const PrivateRoute: React.FC<{ children: JSX.Element; allowedRoles?: string[] }> = ({ children, allowedRoles }) => {
+  const PrivateRoute: React.FC<{ 
+    children: ReactElement; 
+    allowedRoles?: string[] 
+  }> = ({ children, allowedRoles }) => {
     const { user } = useAuth();
 
     if (!user) {
@@ -64,7 +66,6 @@ function App() {
       element: <Layout />,
       children: [
         { path: "/", element: <Home /> },
-
         {
           path: "/users",
           element: (
@@ -132,7 +133,7 @@ function App() {
         {
           path: "/profile",
           element: (
-            <PrivateRoute allowedRoles={["admin", "inspector", "engineer","user"]}>
+            <PrivateRoute allowedRoles={["admin", "inspector", "engineer", "user"]}>
               <Profile />
             </PrivateRoute>
           ),
