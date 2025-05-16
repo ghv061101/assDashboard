@@ -26,7 +26,6 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/login/Login";
 import Profile from "./components/profile/Profile";
 
-import "./app.scss";
 import "./styles/global.scss";
 import Signup from "./pages/signup/SignUp";
 
