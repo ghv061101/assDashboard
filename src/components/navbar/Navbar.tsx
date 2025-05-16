@@ -1,10 +1,14 @@
+import React from "react";
 import './navbar.scss';
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
+  const { user } = useAuth();
+
   return (
     <div className="navbar">
       <div className="logo">
-        <img src="react.svg" alt="logo" />
+        <img src="/react.svg" alt="logo" />
         <span>React Admin</span>
       </div>
 
@@ -21,10 +25,10 @@ const Navbar = () => {
         <div className="user">
           <img
             src="https://images.pexels.com/photos/2297927/pexels-photo-2297927.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
+            alt="User Avatar"
             className="icon"
           />
-          <span>Harsha</span>
+          <span>{user ? user.email : "Guest"}</span>
         </div>
 
         <img src="/settings.svg" alt="" className="icon" />
