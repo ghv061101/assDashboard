@@ -26,6 +26,7 @@ import Profile from "./components/profile/Profile";
 
 import './app.scss'
 import './styles/global.scss'
+import type { JSX } from "react/jsx-runtime";
 
 function App() {
   const Layout = () => (
