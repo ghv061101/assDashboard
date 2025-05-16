@@ -1,0 +1,51 @@
+.menu {
+  width: 240px;
+  background-color: #1e1e2f;
+  color: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 130vh;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #8888a6;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #ffffff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .listItemTitle {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      &:hover {
+        background-color: #292942;
+        transform: translateX(4px);
+      }
+    }
+  }
+}

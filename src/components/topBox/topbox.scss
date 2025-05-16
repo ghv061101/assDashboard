@@ -1,0 +1,71 @@
+.topBox {
+  padding: 20px;
+  border-radius: 14px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .listItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background-color: #ccacca;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    //   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        background-color: #c5a3c3;
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img {
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          object-fit: cover;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .userTexts {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+
+          .shipName {
+            font-weight: 600;
+            font-size: 13px;
+            color: #222;
+          }
+
+          .producer {
+            font-size: 11px;
+            color: #555;
+          }
+        }
+      }
+
+      .amount {
+        font-weight: 600;
+        font-size: 13px;
+        color: #333;
+      }
+    }
+  }
+}
