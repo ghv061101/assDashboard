@@ -25,14 +25,12 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Login from "./pages/login/Login";
 import Profile from "./components/profile/Profile";
 import Signup from "./pages/signup/SignUp";
-
+import './app.scss'
 import "./styles/global.scss";
 
-// Define valid roles as const array
 const VALID_ROLES = ['admin', 'inspector', 'engineer', 'user'] as const;
 type ValidRole = typeof VALID_ROLES[number];
 
-// Layout component for main structure
 const Layout: React.FC = () => (
   <div className="main">
     <Navbar />

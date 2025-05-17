@@ -11,10 +11,13 @@
     gap: 10px;
     margin-bottom: 20px;
 
-    input, select {
+    input,
+    select {
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      flex: 1;
+      min-width: 180px;
     }
 
     button {
@@ -31,7 +34,8 @@
     width: 100%;
     border-collapse: collapse;
 
-    th, td {
+    th,
+    td {
       padding: 10px 14px;
       border: 1px solid #ddd;
       text-align: left;
@@ -63,5 +67,58 @@
   p {
     margin: 8px 0;
     font-size: 16px;
+  }
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .products {
+    padding: 10px;
+
+    .add-section {
+      flex-direction: column;
+
+      input,
+      select,
+      button {
+        width: 100%;
+      }
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+
+  .product-detail {
+    padding: 10px;
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .products {
+    h2 {
+      font-size: 20px;
+    }
+
+    table {
+      font-size: 14px;
+    }
+  }
+
+  .product-detail {
+    h2 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 13px;
+    }
   }
 }

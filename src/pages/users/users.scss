@@ -26,7 +26,7 @@
     }
 
     th {
-      background-color: #f4f4f4;
+      background-color: #f98e8e;
     }
 
     .edit-btn,
@@ -46,6 +46,15 @@
     .delete-btn {
       background-color: #f44336;
       color: white;
+    }
+  }
+
+  // Mobile table scroll
+  @media (max-width: 600px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
     }
   }
 }
@@ -79,6 +88,7 @@
     .buttons {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
 
       button {
         padding: 8px 20px;
@@ -95,6 +105,20 @@
       button[type="button"] {
         background-color: #aaa;
         color: white;
+      }
+    }
+  }
+
+  // Mobile form adjustments
+  @media (max-width: 600px) {
+    form {
+      max-width: 100%;
+
+      .buttons {
+        flex-direction: column;
+        button {
+          width: 100%;
+        }
       }
     }
   }
